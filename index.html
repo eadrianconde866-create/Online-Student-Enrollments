@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Enrollment System</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="container">
+
+    <h1>Student Enrollment System</h1>
+
+    <div class="form">
+
+        <label>Student ID</label>
+        <input type="text" id="studentId" placeholder="Enter Student ID">
+
+        <label>Full Name</label>
+        <input type="text" id="fullName" placeholder="Enter Full Name">
+
+        <label>Course</label>
+        <select id="course">
+            <option value="">Select Course</option>
+            <option>BSIT</option>
+            <option>BSCS</option>
+            <option>BSIS</option>
+            <option>BSAIS</option>
+            <option>BSBA</option>
+        </select>
+
+        <label>Semester</label>
+        <select id="semester">
+            <option value="">Select Semester</option>
+            <option>1st Semester</option>
+            <option>2nd Semester</option>
+            <option>Summer</option>
+        </select>
+
+        <label>Requirement (1 Copy)</label>
+        <input type="file" id="requirement">
+
+        <button onclick="enrollStudent()">Enroll Student</button>
+
+    </div>
+
+    <div id="result"></div>
+
+</div>
+
+<div class="enrolled-section">
+
+    <h2>List of Enrolled Students</h2>
+
+    <table id="studentTable">
+        <thead>
+            <tr>
+                <th>Student ID</th>
+                <th>Full Name</th>
+                <th>Course</th>
+                <th>Semester</th>
+                <th>Requirement</th>
+            </tr>
+        </thead>
+
+        <tbody id="studentList">
+            
+        </tbody>
+    </table>
+
+</div>
+
+<script src="script.js"></script>
+
+</body>
+</html>
