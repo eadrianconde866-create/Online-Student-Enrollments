@@ -4,16 +4,158 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Enrollment System</title>
-    <link rel="stylesheet" href="style.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        body {
+            background-image: url(2044.jpg);
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            padding: 40px 0;
+        }
+
+        .container {
+            width: 500px;
+            margin: auto;
+            background: #fff;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 8px 20px rgba(0,0,0,.2);
+        }
+
+        h1 {
+            text-align: center;
+            color: #6A11CB;
+            margin-bottom: 25px;
+        }
+
+        .form label {
+            display: block;
+            margin-top: 15px;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        .form input,
+        .form select {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            font-size: 15px;
+        }
+
+        .form input:focus,
+        .form select:focus {
+            outline: none;
+            border-color: #6A11CB;
+        }
+
+        button {
+            width: 100%;
+            margin-top: 25px;
+            padding: 12px;
+            border: none;
+            border-radius: 8px;
+            background: #6A11CB;
+            color: white;
+            font-size: 16px;
+            cursor: pointer;
+            transition: .3s;
+        }
+
+        button:hover {
+            background: #4B0EA9;
+        }
+
+        .deleteBtn {
+            width: auto;
+            margin-top: 0;
+            padding: 6px 12px;
+            background-color: #ff4d4d;
+            font-size: 14px;
+        }
+
+        .deleteBtn:hover {
+            background-color: #cc0000;
+        }
+
+        .enrolled-section {
+            width: 50%;
+            max-width: 1000px;
+            margin: 50px auto;
+            background: #fff;
+            padding: 25px;
+            border-radius: 15px;
+            box-shadow: 0 8px 20px rgba(0,0,0,.2);
+        }
+
+        .enrolled-section h2 {
+            text-align: center;
+            color: #6A11CB;
+            margin-bottom: 20px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        table th {
+            background: #6A11CB;
+            color: #fff;
+            padding: 12px;
+        }
+
+        table td {
+            padding: 12px;
+            border: 1px solid #ddd;
+            text-align: center;
+        }
+
+        table tr:nth-child(even) {
+            background: #f5f5f5;
+        }
+
+        table tr:hover {
+            background: #ece2ff;
+        }
+
+        #result {
+            margin-top: 20px;
+            text-align: center;
+            color: green;
+            font-weight: bold;
+        }
+
+        @media (max-width:768px) {
+            .container {
+                width: 95%;
+            }
+
+            .enrolled-section {
+                width: 95%;
+                overflow-x: auto;
+            }
+
+            table {
+                min-width: 700px;
+            }
+        }
+    </style>
 </head>
 <body>
 
 <div class="container">
-
     <h1>Student Enrollment System</h1>
 
     <div class="form">
-
         <label>Student ID</label>
         <input type="text" id="studentId" placeholder="Enter Student ID">
 
@@ -42,15 +184,12 @@
         <input type="file" id="requirement">
 
         <button onclick="enrollStudent()">Enroll Student</button>
-
     </div>
 
     <div id="result"></div>
-
 </div>
 
 <div class="enrolled-section">
-
     <h2>List of Enrolled Students</h2>
 
     <table id="studentTable">
@@ -61,17 +200,60 @@
                 <th>Course</th>
                 <th>Semester</th>
                 <th>Requirement</th>
-            </tr>
+                <th>Action</th> </tr>
         </thead>
-
         <tbody id="studentList">
-            
-        </tbody>
+            </tbody>
     </table>
-
 </div>
 
-<script src="script.js"></script>
+<script>
+function enrollStudent() {
+    let studentId = document.getElementById("studentId").value;
+    let fullName = document.getElementById("fullName").value;
+    let course = document.getElementById("course").value;
+    let semester = document.getElementById("semester").value;
+    let requirement = document.getElementById("requirement");
+
+    if(studentId == "" || fullName == "" || course == "" || semester == ""){
+        alert("Please fill in all fields.");
+        return;
+    }
+
+    let fileName = "No File";
+
+    if(requirement.files.length > 0){
+        fileName = requirement.files[0].name;
+    }
+
+    // Targets the tbody directly so rows are injected cleanly inside the table body
+    let tableBody = document.getElementById("studentList");
+    let row = tableBody.insertRow();
+
+    row.insertCell(0).innerHTML = studentId;
+    row.insertCell(1).innerHTML = fullName;
+    row.insertCell(2).innerHTML = course;
+    row.insertCell(3).innerHTML = semester;
+    row.insertCell(4).innerHTML = fileName;
+
+    let action = row.insertCell(5);
+    action.innerHTML = '<button class="deleteBtn" onclick="deleteStudent(this)">Delete</button>';
+
+    // Reset input fields
+    document.getElementById("studentId").value = "";
+    document.getElementById("fullName").value = "";
+    document.getElementById("course").selectedIndex = 0;
+    document.getElementById("semester").selectedIndex = 0;
+    document.getElementById("requirement").value = "";
+
+    alert("Student Enrolled Successfully!");
+}
+
+function deleteStudent(button){
+    let row = button.parentNode.parentNode;
+    row.parentNode.removeChild(row);
+}
+</script>
 
 </body>
 </html>
